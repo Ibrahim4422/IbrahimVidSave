@@ -103,7 +103,7 @@ async def handle_quality_choice(update: Update, context: ContextTypes.DEFAULT_TY
         'outtmpl': 'downloads/%(title)s.%(ext)s',
         'merge_output_format': 'mp4',
         'postprocessors': [{
-            'key': 'FFmpegVideoConvertor',
+            'key': 'FFmpegMerger',
             'preferedformat': 'mp4',
         }],
         'postprocessor_args': [
