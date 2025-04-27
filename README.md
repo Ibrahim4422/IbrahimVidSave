@@ -1,6 +1,6 @@
 # 📥 IbrahimVidSave - Telegram Video Downloader Bot
 
-Welcome to **IbrahimVidSave**, a simple yet powerful **Telegram bot** that lets users download videos from **TikTok**, **Instagram**, and **YouTube Shorts** – with full support for both **English 🇬🇧** and **Najdi Arabic 🇸🇦**!
+Welcome to **IbrahimVidSave**, a simple yet powerful **Telegram bot** that lets users download videos from **TikTok**, **Instagram**, and **YouTube Shorts** – with full support for both **English 🇬🇧** and **Arabic 🇸🇦**!
 
 Built as a personal learning project to explore Telegram Bot APIs, Python async programming, social media downloading, and real-world debugging.
 
@@ -15,7 +15,7 @@ Built as a personal learning project to explore Telegram Bot APIs, Python async 
   - Audio Only 🎵
 - Multilingual:
   - English 🇬🇧
-  - Najdi Arabic 🇸🇦 (اللهجة النجدية)
+  - Arabic 🇸🇦
 - Friendly UI with inline buttons and reply menus
 - Secure file size checking (max 50MB for Telegram sending)
 - Automatic re-encoding for safe video formats
@@ -94,7 +94,6 @@ Built as a personal learning project to explore Telegram Bot APIs, Python async 
 - yt-dlp
 - ffmpeg
 - python-dotenv
-- MacBook M1 (local development)
 
 ---
 
@@ -118,15 +117,6 @@ Built as a personal learning project to explore Telegram Bot APIs, Python async 
 - Structuring scalable multilingual bots
 - Properly handling API secrets and bot security
 - UX design for bots (Menus, cancel options, easy navigation)
-
----
-
-## 🔥 Future Improvements
-
-- Auto-detect user's preferred language based on Telegram profile
-- Hosting the bot on a cloud server (AWS, Railway, etc.)
-- Support more platforms like Facebook, X (Twitter)
-- Add progress bar for large downloads
 
 ---
 
