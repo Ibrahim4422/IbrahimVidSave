@@ -1,8 +1,7 @@
-# bot.py
-
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler, ConversationHandler, ContextTypes, filters
 from texts import texts
+import asyncio
 from dotenv import load_dotenv
 import os
 import yt_dlp
@@ -171,35 +170,32 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     return ConversationHandler.END
 
 # Main
-def main():
+async def main():
+    # Load Bot Token
+    BOT_TOKEN = os.getenv("BOT_TOKEN")
+    if not BOT_TOKEN:
+        raise ValueError("BOT_TOKEN not found! Check environment variables!")
+
+    # Azure HTTPS URL (your container app public address)
+    AZURE_APP_URL = "https://ibrahimvidsave.jollymoss-f95373d9.polandcentral.azurecontainerapps.io"
+
+    # Build application
     application = ApplicationBuilder().token(BOT_TOKEN).build()
 
-    conv_handler = ConversationHandler(
-        entry_points=[
-            CommandHandler('download', download_command),
-            MessageHandler(filters.Regex('^تحميل فيديو 🎥$'), download_command),
-            MessageHandler(filters.Regex('^Download Video 🎥$'), download_command),
-        ],
-        states={
-            ASK_FOR_LINK: [MessageHandler(filters.TEXT & ~filters.COMMAND, handle_link)],
-            ASK_FOR_QUALITY: [
-                CallbackQueryHandler(handle_quality_choice),
-                MessageHandler(filters.TEXT & ~filters.COMMAND, handle_quality_choice),
-            ],
-        },
-        fallbacks=[
-            CommandHandler('cancel', cancel),
-            MessageHandler(filters.Regex('^❌ إلغاء$'), cancel),
-            MessageHandler(filters.Regex('^❌ Cancel$'), cancel),
-        ],
+    # Add your handlers here, for example:
+    # application.add_handler(CommandHandler('start', start))
+    # application.add_handler(ConversationHandler(...))
+
+    # Set the webhook with Telegram
+    await application.bot.set_webhook(url=AZURE_APP_URL)
+
+    # Run webhook server
+    await application.run_webhook(
+        listen="0.0.0.0",    # Listen on all available IPs
+        port=80,             # Azure Container Apps listen on port 80
+        webhook_path="/",    # Webhook endpoint
     )
 
-    application.add_handler(CommandHandler('start', start))
-    application.add_handler(CommandHandler('language', change_language))
-    application.add_handler(conv_handler)
-    application.add_handler(CallbackQueryHandler(choose_language, pattern='^(en|ar)$'))
-
-    application.run_polling()
-
-if __name__ == '__main__':
-    main()
+# Python 3.7+ way to run asyncio event loop
+if __name__ == "__main__":
+    asyncio.run(main())
